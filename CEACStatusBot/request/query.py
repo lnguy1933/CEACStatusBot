@@ -125,4 +125,5 @@ def query_status(location, application_num, passport_number, surname, captchaHan
         result = {
             "success": False,
         }
+    print(result)
     return result
