@@ -24,7 +24,7 @@ def query_status(location, application_num, passport_number, surname, captchaHan
         ROOT = "https://ceac.state.gov"
 
         try:
-            r = session.get(url=f"{ROOT}/ceacstattracker/status.aspx?App=NIV", headers=headers)
+            r = session.get(url=f"{ROOT}/ceacstattracker/status.aspx?App=IV", headers=headers)
         except Exception as e:
             print(e)
             isSuccess = False
@@ -42,16 +42,16 @@ def query_status(location, application_num, passport_number, surname, captchaHan
         print(f"Captcha solved: {captcha_num}")
 
         # Find the correct value for the location dropdown
-        location_dropdown = soup.find("select", id="Location_Dropdown")
-        location_value = None
-        for option in location_dropdown.find_all("option"):
-            if location in option.text:
-                location_value = option["value"]
-                break
+        # location_dropdown = soup.find("select", id="Location_Dropdown")
+        # location_value = None
+        # for option in location_dropdown.find_all("option"):
+        #     if location in option.text:
+        #         location_value = option["value"]
+        #         break
 
-        if not location_value:
-            print("Location not found in dropdown options.")
-            return {"success": False}
+        # if not location_value:
+        #     print("Location not found in dropdown options.")
+        #     return {"success": False}
 
         # Fill form
         def update_from_current_page(cur_page, name, data):
@@ -69,11 +69,11 @@ def query_status(location, application_num, passport_number, surname, captchaHan
             "__VIEWSTATEGENERATOR": "DBF1011F",
             "__VIEWSTATEENCRYPTED": "",
             "ctl00$ContentPlaceHolder1$Visa_Application_Type": "NIV",
-            "ctl00$ContentPlaceHolder1$Location_Dropdown": location_value,  # Use the correct value
+            # "ctl00$ContentPlaceHolder1$Location_Dropdown": location_value,  # Use the correct value
             "ctl00$ContentPlaceHolder1$Visa_Case_Number": application_num,
             "ctl00$ContentPlaceHolder1$Captcha": captcha_num,
-            "ctl00$ContentPlaceHolder1$Passport_Number": passport_number,
-            "ctl00$ContentPlaceHolder1$Surname": surname,
+            # "ctl00$ContentPlaceHolder1$Passport_Number": passport_number,
+            # "ctl00$ContentPlaceHolder1$Surname": surname,
             "LBD_VCID_c_status_ctl00_contentplaceholder1_defaultcaptcha": "a81747f3a56d4877bf16e1a5450fb944",
             "LBD_BackWorkaround_c_status_ctl00_contentplaceholder1_defaultcaptcha": "1",
             "__ASYNCPOST": "true",
