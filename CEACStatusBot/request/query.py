@@ -5,6 +5,7 @@ import time
 from CEACStatusBot.captcha import CaptchaHandle, OnnxCaptchaHandle
 
 def query_status(location, application_num, passport_number, surname, captchaHandle: CaptchaHandle = OnnxCaptchaHandle("captcha.onnx")):
+    print('Here query status')
     isSuccess = False
     failCount = 0
 
@@ -68,7 +69,7 @@ def query_status(location, application_num, passport_number, surname, captchaHan
             "__VIEWSTATE": "8GJOG5GAuT1ex7KX3jakWssS08FPVm5hTO2feqUpJk8w5ukH4LG/o39O4OFGzy/f2XLN8uMeXUQBDwcO9rnn5hdlGUfb2IOmzeTofHrRNmB/hwsFyI4mEx0mf7YZo19g",
             "__VIEWSTATEGENERATOR": "DBF1011F",
             "__VIEWSTATEENCRYPTED": "",
-            "ctl00$ContentPlaceHolder1$Visa_Application_Type": "NIV",
+            "ctl00$ContentPlaceHolder1$Visa_Application_Type": "IV",
             # "ctl00$ContentPlaceHolder1$Location_Dropdown": location_value,  # Use the correct value
             "ctl00$ContentPlaceHolder1$Visa_Case_Number": application_num,
             "ctl00$ContentPlaceHolder1$Captcha": captcha_num,
@@ -78,6 +79,7 @@ def query_status(location, application_num, passport_number, surname, captchaHan
             "LBD_BackWorkaround_c_status_ctl00_contentplaceholder1_defaultcaptcha": "1",
             "__ASYNCPOST": "true",
         }
+        # print(data)
 
         fields_need_update = [
             "__VIEWSTATE",
@@ -101,7 +103,9 @@ def query_status(location, application_num, passport_number, surname, captchaHan
             continue
 
         application_num_returned = soup.find("span", id="ctl00_ContentPlaceHolder1_ucApplicationStatusView_lblCaseNo").string
-        assert application_num_returned == application_num
+        # print(application_num_returned)
+        # assert application_num_returned == application_num
+        assert application_num in application_num_returned
         status = status_tag.string
         visa_type = soup.find("span", id="ctl00_ContentPlaceHolder1_ucApplicationStatusView_lblAppName").string
         case_created = soup.find("span", id="ctl00_ContentPlaceHolder1_ucApplicationStatusView_lblSubmitDate").string
