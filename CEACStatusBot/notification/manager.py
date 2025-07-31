@@ -31,7 +31,6 @@ class NotificationManager():
             self.__send_notifications(res)
         else:
             print("Status unchanged. No notification sent.")
-            self.__send_notifications(res)
 
     def __load_statuses(self) -> list:
         if os.path.exists(self.__status_file):
